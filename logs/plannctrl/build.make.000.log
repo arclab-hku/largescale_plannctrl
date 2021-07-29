@@ -1,0 +1,20 @@
+[ 28%] [32mBuilding CXX object CMakeFiles/track_node.dir/include/controllers/backstepping.cpp.o[0m
+[ 28%] [32mBuilding CXX object CMakeFiles/track_node.dir/src/run_plannctrl.cpp.o[0m
+[ 42%] [32mBuilding CXX object CMakeFiles/track_node.dir/include/offboard_env/ros_missn.cpp.o[0m
+[ 57%] [32mBuilding CXX object CMakeFiles/track_node.dir/include/planners/trajgen.cpp.o[0m
+[ 71%] [32mBuilding CXX object CMakeFiles/track_node.dir/include/Tools.cpp.o[0m
+[ 85%] [32mBuilding CXX object CMakeFiles/track_node.dir/include/planners/wayp_reader.cpp.o[0m
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/controllers/backstepping.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/planners/trajgen.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/offboard_env/ros_missn.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/Tools.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K
+[100%] [32m[1mLinking CXX executable /home/johanna/catkin_mmc/devel/.private/plannctrl/lib/plannctrl/track_node[0m
+[100%] Built target track_node

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/johanna/catkin_mmc/devel/.private/mavros_extras/setup.sh

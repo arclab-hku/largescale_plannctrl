@@ -1,0 +1,12 @@
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/controllers/backstepping.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/planners/trajgen.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/offboard_env/ros_missn.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K
+[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/include/Tools.cpp:7:9:[m[K [01;35m[Kwarning: [m[K#pragma once in main file
+ #pragma [01;35m[Konce[m[K
+         [01;35m[K^~~~[m[K

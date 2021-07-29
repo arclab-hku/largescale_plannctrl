@@ -1,0 +1,6 @@
+devel_space: /home/johanna/catkin_mmc/devel
+install: false
+install_space: /home/johanna/catkin_mmc/install
+profile: default
+source_space: /home/johanna/catkin_mmc/src
+workspace: /home/johanna/catkin_mmc

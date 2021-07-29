@@ -1,0 +1,10 @@
+mavros/mavros
+/home/johanna/catkin_mmc/devel/.private/mavros/cmake.lock /home/johanna/catkin_mmc/devel/./cmake.lock
+/home/johanna/catkin_mmc/devel/.private/mavros/lib/libmavros_plugins.so /home/johanna/catkin_mmc/devel/lib/libmavros_plugins.so
+/home/johanna/catkin_mmc/devel/.private/mavros/lib/libmavros.so /home/johanna/catkin_mmc/devel/lib/libmavros.so
+/home/johanna/catkin_mmc/devel/.private/mavros/lib/pkgconfig/mavros.pc /home/johanna/catkin_mmc/devel/lib/pkgconfig/mavros.pc
+/home/johanna/catkin_mmc/devel/.private/mavros/lib/mavros/gcs_bridge /home/johanna/catkin_mmc/devel/lib/mavros/gcs_bridge
+/home/johanna/catkin_mmc/devel/.private/mavros/lib/mavros/mavros_node /home/johanna/catkin_mmc/devel/lib/mavros/mavros_node
+/home/johanna/catkin_mmc/devel/.private/mavros/lib/python2.7/dist-packages/mavros/__init__.py /home/johanna/catkin_mmc/devel/lib/python2.7/dist-packages/mavros/__init__.py
+/home/johanna/catkin_mmc/devel/.private/mavros/share/mavros/cmake/mavrosConfig-version.cmake /home/johanna/catkin_mmc/devel/share/mavros/cmake/mavrosConfig-version.cmake
+/home/johanna/catkin_mmc/devel/.private/mavros/share/mavros/cmake/mavrosConfig.cmake /home/johanna/catkin_mmc/devel/share/mavros/cmake/mavrosConfig.cmake

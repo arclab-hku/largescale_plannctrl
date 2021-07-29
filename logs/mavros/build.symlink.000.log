@@ -1,0 +1,8 @@
+Symlinking /home/johanna/catkin_mmc/devel/lib/libmavros_plugins.so
+Symlinking /home/johanna/catkin_mmc/devel/lib/libmavros.so
+Symlinking /home/johanna/catkin_mmc/devel/lib/pkgconfig/mavros.pc
+Symlinking /home/johanna/catkin_mmc/devel/lib/mavros/gcs_bridge
+Symlinking /home/johanna/catkin_mmc/devel/lib/mavros/mavros_node
+Symlinking /home/johanna/catkin_mmc/devel/lib/python2.7/dist-packages/mavros/__init__.py
+Symlinking /home/johanna/catkin_mmc/devel/share/mavros/cmake/mavrosConfig-version.cmake
+Symlinking /home/johanna/catkin_mmc/devel/share/mavros/cmake/mavrosConfig.cmake
