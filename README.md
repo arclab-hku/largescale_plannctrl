@@ -10,6 +10,12 @@ A large scale planner and corresponding controller for quadrotor.
 
 * clone the repo under `~/`
 
+* change the repo name
+
+  ```
+  sudo mv largescale_plannctrl/ catkin_mmc/	
+  ```
+
 * set your way-points in `run/waypoints.txt`
 
   * The first line of the file is the number of way-points. The rest are the x-y-z coordinate of the way-points.
@@ -17,7 +23,7 @@ A large scale planner and corresponding controller for quadrotor.
 * source bash file
 
   ```
-  # go into the folder
+  cd catkin_mmc/ # go into the folder
   source devel/setup.bash
   ```
 
@@ -44,5 +50,4 @@ A large scale planner and corresponding controller for quadrotor.
     ```
 
   * the default maximum velocity is `15.0`, default acceleration is `2.0`.
-
 
