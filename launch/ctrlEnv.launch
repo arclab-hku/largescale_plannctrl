@@ -1,4 +1,7 @@
 <launch>
+    <!--tracking-->
+    <!--arg name="maxvel" default="15.0"/>
+    <arg name="maxacc" default="2.0"/-->
 
     <!-- launches MAVROS, PX4 SITL, Gazebo environment, and spawns vehicle -->
     <!-- vehicle pose -->
@@ -57,7 +60,7 @@
     </include>
 
     <!--tracking-->
-    <!--node pkg="plannctrl_fast" type="track_node" name="track" output="screen">
+    <!--node pkg="plannctrl" type="track_node" name="track" output="screen" args="$(arg maxvel) $(arg maxvel)">
     </node-->
 
   </launch>

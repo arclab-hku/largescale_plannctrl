@@ -31,14 +31,16 @@ int main(int argc, char **argv)
     double MaxVel, MaxAcc, MaxCnrVel = MAXCORVEL;
     double LaunchHht;
 
-    // Initialize ROS
+    // initialize node
     ros::init(argc, argv, "track_node");
+    ros::NodeHandle nh;                // Create a handle to this process node.
+
     if (argc > 1)
     {
         MaxVel = clip(strtod(argv[1], NULL), 1.0, 16.0);
         MaxAcc = clip(strtod(argv[2], NULL), 0.1, 5.0);
-        // cout << MaxVel << endl
-        //      << MaxAcc << endl;
+        cout << MaxVel << endl
+             << MaxAcc << endl;
         // max corner velocity
         if (MaxVel < MAXCORVEL)
             MaxCnrVel = MaxVel;
@@ -54,8 +56,7 @@ int main(int argc, char **argv)
     TrajectoryGenerator reference(MaxVel, MaxAcc, MaxCnrVel);
     LaunchHht = reference.LaunchHht;
 
-    // initialize node
-    ros::NodeHandle nh;                // Create a handle to this process node.
+    // Initialize ROS
     RosClass flying(&nh, CtrlFreq);
     flying.init(LaunchHht);
 
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
 
     int i = 0;
     // for (int i = 0; i <= FlyStep; i++)
-    while (!reference.trajFinished)
+    while (!reference.trajFinished && ros::ok())
     {
         double timee = 1.0 * (i + 1) / CtrlFreq;
 

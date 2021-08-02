@@ -34,7 +34,6 @@ A large scale planner and corresponding controller for quadrotor.
   ```
   roslaunch plannctrl ctrlEnv.launch
   # open a new terminal
-  cd ~/largescale_plannctrl/src/
   rosrun plannctrl track_node
   ```
   
@@ -55,7 +54,6 @@ A large scale planner and corresponding controller for quadrotor.
 * read way points
   * Set the way points in the `src/waypoints.txt`. 
   * The first line of the file is the number of way-points. The rest are the x-y-z coordinate of the way-points.
-  * the path for reading way points can be set in `include/planners/wayp_reader.cpp`
 
 
 
@@ -76,6 +74,7 @@ This folder includes all modules for c++, including:
 * simulation and off-board flight environment `offboard_env/`) with corresponding call backs(`call_states`);
 * controllers and planners;
 * tracking references;
+* flight logs.
 
 ### src/
 
