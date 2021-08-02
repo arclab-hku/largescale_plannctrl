@@ -19,21 +19,24 @@ A large scale planner and corresponding controller for quadrotor.
 * build the ros package
 
   ```
-  cd ~/catkin_ws/
+  cd ~/catkin_ws/		# go into your catkin workspace
   catkin build plannctrl
   ```
 
-* source bash file
+* source bash file & launch
 
   ```
   source devel/setup.bash
-  ```
-
-* launch & run
-
-  ```
   roslaunch plannctrl ctrlEnv.launch
+  ```
+
+* source bash file & run
+
+  ```
   # open a new terminal
+  cd ~/catkin_ws/		# go into your catkin workspace
+  source devel/setup.bash
+  cd src/largescale_plannctrl/src		# go into folder with waypoints.txt
   rosrun plannctrl track_node
   ```
   
@@ -46,6 +49,7 @@ A large scale planner and corresponding controller for quadrotor.
   ```
 
   * the default maximum velocity is `15.0`, default acceleration is `2.0`.
+  * the path for reading way points can be set in `include/planners/wayp_reader.cpp`
 
 
 
@@ -74,7 +78,6 @@ This folder includes all modules for c++, including:
 * simulation and off-board flight environment `offboard_env/`) with corresponding call backs(`call_states`);
 * controllers and planners;
 * tracking references;
-* flight logs.
 
 ### src/
 
