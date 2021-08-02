@@ -1,1 +1,0 @@
-/home/johanna/catkin_mmc/devel/.private/plannctrl/lib/pkgconfig/plannctrl.pc

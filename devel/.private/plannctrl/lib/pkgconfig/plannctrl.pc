@@ -1,8 +1,0 @@
-prefix=/home/johanna/catkin_mmc/devel/.private/plannctrl
-
-Name: plannctrl
-Description: Description of plannctrl
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

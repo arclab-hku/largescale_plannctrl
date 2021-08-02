@@ -1,7 +1,0 @@
-mavros/test_mavros
-/home/johanna/catkin_mmc/devel/.private/test_mavros/cmake.lock /home/johanna/catkin_mmc/devel/./cmake.lock
-/home/johanna/catkin_mmc/devel/.private/test_mavros/lib/libmavros_sitl_test.so /home/johanna/catkin_mmc/devel/lib/libmavros_sitl_test.so
-/home/johanna/catkin_mmc/devel/.private/test_mavros/lib/pkgconfig/test_mavros.pc /home/johanna/catkin_mmc/devel/lib/pkgconfig/test_mavros.pc
-/home/johanna/catkin_mmc/devel/.private/test_mavros/lib/test_mavros/sitl_test_node /home/johanna/catkin_mmc/devel/lib/test_mavros/sitl_test_node
-/home/johanna/catkin_mmc/devel/.private/test_mavros/share/test_mavros/cmake/test_mavrosConfig.cmake /home/johanna/catkin_mmc/devel/share/test_mavros/cmake/test_mavrosConfig.cmake
-/home/johanna/catkin_mmc/devel/.private/test_mavros/share/test_mavros/cmake/test_mavrosConfig-version.cmake /home/johanna/catkin_mmc/devel/share/test_mavros/cmake/test_mavrosConfig-version.cmake

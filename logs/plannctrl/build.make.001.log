@@ -1,9 +1,0 @@
-[35m[1mConsolidate compiler generated dependencies of target track_node[0m
-[ 14%] [32mBuilding CXX object CMakeFiles/track_node.dir/src/run_plannctrl.cpp.o[0m
-[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/src/run_plannctrl.cpp:[m[K In function ‘[01m[Kint main(int, char**)[m[K’:
-[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/src/run_plannctrl.cpp:58:60:[m[K [01;35m[Kwarning: [m[K‘[01m[KMaxAcc[m[K’ may be used uninitialized in this function [[01;35m[K-Wmaybe-uninitialized[m[K]
-     TrajectoryGenerator reference(MaxVel, MaxAcc, MaxCnrVel[01;35m[K)[m[K;
-                                                            [01;35m[K^[m[K
-[01m[K/home/johanna/catkin_mmc/src/large_scale_plannctrl/src/run_plannctrl.cpp:58:60:[m[K [01;35m[Kwarning: [m[K‘[01m[KMaxVel[m[K’ may be used uninitialized in this function [[01;35m[K-Wmaybe-uninitialized[m[K]
-[ 28%] [32m[1mLinking CXX executable /home/johanna/catkin_mmc/devel/.private/plannctrl/lib/plannctrl/track_node[0m
-[100%] Built target track_node
