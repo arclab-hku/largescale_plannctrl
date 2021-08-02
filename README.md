@@ -10,12 +10,6 @@ A large scale planner and corresponding controller for quadrotor.
 
 * clone the repo under `~/`
 
-* change the repo name
-
-  ```
-  sudo mv largescale_plannctrl/ catkin_mmc/	
-  ```
-
 * set your way-points in `run/waypoints.txt`
 
   * The first line of the file is the number of way-points. The rest are the x-y-z coordinate of the way-points.
@@ -24,7 +18,7 @@ A large scale planner and corresponding controller for quadrotor.
 
   ```
   cd catkin_mmc/ # go into the folder
-  source devel/setup.bash
+  source devel/.private/catkin_tools_prebuild/setup.bash
   ```
 
 * launch mavros & gazebo
