@@ -12,9 +12,10 @@ A large scale planner and corresponding controller for quadrotor.
 
   * mavros should be installed in this workspace.
 
-* set your way-points in `src/waypoints.txt`
-
-  * The first line of the file is the number of way-points. The rest are the x-y-z coordinate of the way-points.
+  ```
+  cd ~/catkin_ws/		# go into your catkin workspace
+  git clone https://github.com/arclab-hku/largescale_plannctrl.git
+  ```
 
 * build the ros package
 
@@ -30,6 +31,10 @@ A large scale planner and corresponding controller for quadrotor.
   roslaunch plannctrl ctrlEnv.launch
   ```
 
+* set your way-points in `src/waypoints.txt`
+
+  * The first line of the file is the number of way-points. The rest are the x-y-z coordinate of the way-points.
+  
 * source bash file & run
 
   ```
