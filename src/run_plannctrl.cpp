@@ -23,8 +23,8 @@ using namespace Eigen;
 
 #define CtrlFreq 50         // control frequency
 #define MAXVEL 15.0         // maximum velocity
-#define MAXACC 2.0         // maximum acceleration
-#define MAXCORVEL 4.0         // maximum corner velocity
+#define MAXACC 4.0         // maximum acceleration
+#define MAXCORVEL 6.0         // maximum corner velocity
 
 int main(int argc, char **argv)
 {
@@ -84,8 +84,8 @@ int main(int argc, char **argv)
         bsc.controller(state, p_d, v_d, a_d);
 
         // step forward
-        // state = flying.step(bsc.yawCtrl, p_d, "yaw_n_position"); 
-        state = flying.step(bsc.yawCtrl, bsc.velCtrl, "yaw_n_velocity"); 
+        state = flying.step(bsc.yawCtrl, p_d, "yaw_n_position"); 
+        // state = flying.step(bsc.yawCtrl, bsc.velCtrl, "yaw_n_velocity"); 
         
         // log
         // logger.desires(p_d, v_d);

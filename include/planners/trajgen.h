@@ -104,9 +104,9 @@ class TrajectoryGenerator
         Vector3d strght_dirct_;
 
         // params for corner
-        double CnrMaxSeg = 7.0;     // preserve segment for corner
-        double CnrSeg = 1.0;            // corner waypoint segment
-        double CnrMaxVel = 4.0;     // initial & final vel 
+        double CnrMaxSeg = 21.0;     // preserve segment for corner
+        double CnrSeg = 7.0;            // corner waypoint segment
+        // double CnrMaxVel = 4.0;     // initial & final vel 
 
         bool starting, ending;  // start & end wayp of whole traj has zero vel&ac
 

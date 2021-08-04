@@ -97,12 +97,12 @@ void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
     fAcc.setZero();
     if (!starting)
     {
-        iVel = CnrMaxVel * start_dirct;
+        iVel = MaxCnrVel_ * start_dirct;
         iAcc = MaxAcc_ * start_dirct;
     }
     if (!ending)
     {
-        fVel = CnrMaxVel * end_dirct;
+        fVel = MaxCnrVel_ * end_dirct;
         fAcc = MaxAcc_ * end_dirct;
     }
 

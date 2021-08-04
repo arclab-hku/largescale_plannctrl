@@ -45,6 +45,7 @@ void BackStepping::YawController_(Vector3d Pr, Vector3d Vr, Vector3d Ar)
         yawr = yawr + 2 * M_PI;
 
     yawCtrl = yawr;
+    // yawCtrl = atan2(Vr(1), Vr(0));
 }
 
 void BackStepping::LinearController_(Vector3d P, Vector3d V, Vector3d desire_P, Vector3d desire_Pd, Vector3d desire_Pdd)
