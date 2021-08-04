@@ -13,7 +13,7 @@ A large scale planner and corresponding controller for quadrotor.
   * mavros should be installed in this workspace.
 
   ```
-  cd ~/catkin_ws/		# go into your catkin workspace
+  cd ~/catkin_ws/src/		# go into your catkin workspace
   git clone https://github.com/arclab-hku/largescale_plannctrl.git
   ```
 
