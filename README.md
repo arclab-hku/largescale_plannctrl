@@ -130,3 +130,18 @@ source devel/setup.bash
 . devel/setup.bash
 ```
 
+
+
+## Launch Gazebo with ROS Wrappers
+
+To run SITL wrapped in ROS the ROS environment needs to be updated, then launch as usual:
+
+```
+cd <Firmware_clone>
+DONT_RUN=1 make px4_sitl_default gazebo
+source ~/catkin_ws/devel/setup.bash    
+source Tools/setup_gazebo.bash $(pwd) $(pwd)/build/px4_sitl_default
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:$(pwd)/Tools/sitl_gazebo
+```
+

@@ -22,6 +22,7 @@ catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   
+  mavros
   control_msgs
   gazebo_msgs
   gazebo_plugins
