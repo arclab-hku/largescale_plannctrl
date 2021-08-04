@@ -88,3 +88,45 @@ This folder includes all modules for c++, including:
 
 This folder includes all c++ main codes.
 
+
+
+## Install Mavros in your catkin workspace
+
+[reference](https://dev.px4.io/v1.9.0/en/ros/mavros_installation.html)
+
+Prerequsites: ROS, Gazebo, px4
+
+```shell
+## Install dependencies
+sudo apt-get install python-catkin-tools python-rosinstall-generator -y
+
+## Create catkin workspace
+mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws
+catkin init
+wstool init src
+
+## 1. SInstall MAVLink
+###we use the Kinetic reference for all ROS distros as it's not distro-specific and up to date
+rosinstall_generator --rosdistro kinetic mavlink | tee /tmp/mavros.rosinstall
+
+## 2. Install MAVROS from source using either released or latest version:
+## Released/stable
+rosinstall_generator --upstream mavros | tee -a /tmp/mavros.rosinstall
+
+## 3. Create workspace & deps:
+wstool merge -t src /tmp/mavros.rosinstall
+wstool update -t src
+rosdep install --from-paths src --ignore-src -y
+
+## 4. Install GeographicLib datasets:
+sudo ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
+
+## 5. Build source
+catkin build
+
+# 6. Make sure that you use setup.bash or setup.zsh from workspace.
+source devel/setup.bash
+. devel/setup.bash
+```
+
