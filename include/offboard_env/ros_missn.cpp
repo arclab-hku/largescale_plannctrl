@@ -117,7 +117,7 @@ States RosClass::step(double double_n, Vector3d vec3_n, string mode)
 
     get_state_();
 
-    crashed_();
+    //crashed_();
 
     return state;
 }
