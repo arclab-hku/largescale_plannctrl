@@ -21,3 +21,5 @@ struct States
 double clip(double x, double minv, double maxv);
 
 Quaterniond Euler2Quaternion(Vector3d euler);
+
+double twoPI(double angle);

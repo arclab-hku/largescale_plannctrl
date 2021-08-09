@@ -66,7 +66,6 @@ add_executable(track_node
   include/controllers/backstepping.cpp
   include/Tools.cpp
   include/offboard_env/ros_missn.cpp 
-  # include/logs/log_flight.cpp
   ${RFR}
 )
 

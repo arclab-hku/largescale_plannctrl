@@ -40,3 +40,12 @@ Quaterniond Euler2Quaternion(Vector3d euler)
 
     return q.normalized();
 }
+
+double twoPI(double angle)
+{
+    if (angle > M_PI)
+        angle = angle - 2 * M_PI;
+    else if (angle < -M_PI)
+        angle = angle + 2 * M_PI;
+    return angle;
+}

@@ -65,6 +65,7 @@ void TrajectoryGenerator::straightGen_()
 // generate a corner polynomial trajectory by PolyTrajGenerator
 void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
 {
+    // printf ("\nmaking a corner\n");
     currentTraj_ = 0;
 
     // get matrix of wayps
@@ -97,11 +98,13 @@ void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
     fAcc.setZero();
     if (!starting)
     {
+        // printf("not starting\n");
         iVel = MaxCnrVel_ * start_dirct;
         iAcc = MaxAcc_ * start_dirct;
     }
     if (!ending)
     {
+        // printf("not ending\n");
         fVel = MaxCnrVel_ * end_dirct;
         fAcc = MaxAcc_ * end_dirct;
     }
@@ -179,7 +182,9 @@ void TrajectoryGenerator::makeNxtTraj_()
             // push start of a corner       
             Vector3d start_a_corner = getNewPoint_(waypoints_.col(index_wayp_), -dirct, corner_seg);
             if ((start_a_corner - q_crnWayps.back()).norm()>0.4)  // make sure the distance
+            {
                 q_crnWayps.push(start_a_corner); 
+            }
 
             // end of traj
             if (index_wayp_ == (waypRead_.N-1))
@@ -200,7 +205,7 @@ void TrajectoryGenerator::makeNxtTraj_()
             if (distc >= CnrSeg*3)          // re-distribute corner segment
                 corner_seg = CnrSeg;
             else
-                corner_seg = CnrSeg/2;
+                corner_seg = distc/3;
             q_crnWayps.push(getNewPoint_(waypoints_.col(index_wayp_), dirct, corner_seg));
 
             // waypoint[i_wp] is passed now.

@@ -10,6 +10,7 @@ Updated: 28th. Jul. 2021
 #include <iostream>
 #include <Eigen/Eigen>
 
+#include <math.h>
 #include <Tools.h>
 
 using namespace std;
@@ -26,6 +27,8 @@ class BackStepping
         // variables for control
         Vector3d Int_Pe_;
         double yawr_dot, yawr;
+        double yaw_errorlast;
+        int correct_yaw = 0;
 
         // tool functions
         Vector3d coor_(Vector3d p);

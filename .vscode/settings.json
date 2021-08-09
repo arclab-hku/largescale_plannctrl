@@ -29,6 +29,7 @@
         "ostream": "cpp",
         "complex": "cpp",
         "chrono": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "cmath": "cpp"
     }
 }

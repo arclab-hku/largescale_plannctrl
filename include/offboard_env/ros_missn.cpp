@@ -71,7 +71,7 @@ States RosClass::launch(void)
     while (ros::ok())
     {
         Vector3d distance = Start - listener_.P_E;
-        if (distance.norm() < 0.4)
+        if (distance.norm() < 1.0)
         {
             break;
         }

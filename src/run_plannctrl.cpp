@@ -16,7 +16,6 @@ Updated: 28th. Jul. 2021
 #include <controllers/backstepping.h>
 #include <planners/trajgen.h>
 #include <Tools.h>
-// #include <logs/log_flight.h>
 
 using namespace std;
 using namespace Eigen;
@@ -63,8 +62,6 @@ int main(int argc, char **argv)
     // Intialize Controller
     BackStepping bsc(CtrlFreq);     // controller
 
-    // LogFlight logger("plannctrl");    //logging
-    
     // Launch the Drone
     States state = flying.launch();
     reference.initial_generate(state.P_E);
@@ -87,10 +84,6 @@ int main(int argc, char **argv)
         state = flying.step(bsc.yawCtrl, p_d, "yaw_n_position"); 
         // state = flying.step(bsc.yawCtrl, bsc.velCtrl, "yaw_n_velocity"); 
         
-        // log
-        // logger.desires(p_d, v_d);
-        // logger.states(state);
-
         // break if crashed
         if (flying.done)
         {
