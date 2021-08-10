@@ -169,19 +169,19 @@ States RosClass::get_state_(void)
     return state;
 }
 
-void RosClass::crashed_()
-{
-    double z = state.P_E(2);
-    if (z<0.1)
-    {
-        printf("Crashed at height %.2f.\n", z);
-        done =  true;
-    }
-    else
-    {
-        done = false;
-    }
-}
+// void RosClass::crashed_()
+// {
+//     double z = state.P_E(2);
+//     if (z<0.1)
+//     {
+//         printf("Crashed at height %.2f.\n", z);
+//         done =  true;
+//     }
+//     else
+//     {
+//         done = false;
+//     }
+// }
 
 /*
 fcu modes

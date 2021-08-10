@@ -85,10 +85,10 @@ int main(int argc, char **argv)
         // state = flying.step(bsc.yawCtrl, bsc.velCtrl, "yaw_n_velocity"); 
         
         // break if crashed
-        if (flying.done)
-        {
-            break;
-        }
+        // if (flying.done)
+        // {
+        //     break;
+        // }
         i++;
     }
 

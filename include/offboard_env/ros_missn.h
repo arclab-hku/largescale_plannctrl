@@ -70,7 +70,7 @@ class RosClass
         double h_;
 
         States get_state_(void);
-        void crashed_();
+        // void crashed_();
 
         // fcu modes
         bool setArm_(void);
@@ -78,7 +78,7 @@ class RosClass
         bool setMode_Offboard_(void);
 
     public:
-        bool done;
+        // bool done;
 
         // init ros node
         RosClass(ros::NodeHandle *nodehandle, int FREQ);
