@@ -28,7 +28,6 @@ using namespace Eigen;
 int main(int argc, char **argv)
 {
     double MaxVel, MaxAcc, MaxCnrVel = MAXCORVEL;
-    double LaunchHht;
 
     // initialize node
     ros::init(argc, argv, "track_node");
@@ -53,11 +52,10 @@ int main(int argc, char **argv)
 
     // Intialize Planner
     TrajectoryGenerator reference(MaxVel, MaxAcc, MaxCnrVel);
-    LaunchHht = reference.LaunchHht;
 
     // Initialize ROS
     RosClass flying(&nh, CtrlFreq);
-    flying.init(LaunchHht);
+    flying.init(reference.LaunchHht);
 
     // Intialize Controller
     BackStepping bsc(CtrlFreq);     // controller
@@ -72,6 +70,7 @@ int main(int argc, char **argv)
     while (!reference.trajFinished && ros::ok())
     {
         double timee = 1.0 * (i + 1) / CtrlFreq;
+        // printf ("time %.2f\n", timee);
 
         //refer
         Vector3d p_d, v_d, a_d;
@@ -83,15 +82,9 @@ int main(int argc, char **argv)
         // step forward
         state = flying.step(bsc.yawCtrl, p_d, "yaw_n_position"); 
         // state = flying.step(bsc.yawCtrl, bsc.velCtrl, "yaw_n_velocity"); 
-        
-        // break if crashed
-        // if (flying.done)
-        // {
-        //     break;
-        // }
+
         i++;
     }
-
     printf("\nMission Finished.\n");
 
     // landing

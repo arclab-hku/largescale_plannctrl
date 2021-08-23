@@ -1,5 +1,5 @@
 /*
-Description: Run 
+Description: Run ROS Missions, publish and subscribe from ROS.
 Author: XIE Yuhan
 Email: yuhanxie@connect.hku.hk
 Updated: 28th. Jul. 2021
@@ -40,14 +40,11 @@ void RosClass::init(double HGT)
 
 States RosClass::launch(void)
 {
-    get_state_();
-    Start << state.P_E(0), state.P_E(1), LaunchHgt_;
-
     mavros_msgs::PositionTarget takeoff;
     takeoff.type_mask = 8 + 16 + 32 + 64 + 128 + 256 + 2048;
-    takeoff.position.x = Start(0);
-    takeoff.position.y = Start(1);
-    takeoff.position.z = Start(2);
+    takeoff.position.x = 0.0;
+    takeoff.position.y = 0.0;
+    takeoff.position.z = LaunchHgt_;
     takeoff.yaw = 0;
 
     // wait for arm and offboard mode.
@@ -57,7 +54,14 @@ States RosClass::launch(void)
         setArm_();
         ros::spinOnce();
         rate.sleep();
-    }    
+    }
+
+    // update takeoff position
+    get_state_();
+    Start << state.P_E(0), state.P_E(1), LaunchHgt_;
+    takeoff.position.x = Start(0);
+    takeoff.position.y = Start(1);
+
     while (listener_.flight_state.mode != "OFFBOARD" && ros::ok()) 
     {
         pos_pub_.publish(takeoff);
@@ -66,6 +70,12 @@ States RosClass::launch(void)
         rate.sleep();
     }
     printf("Armed. OFFBOARD mode.\n");
+
+    // update takeoff position
+    get_state_();
+    Start << state.P_E(0), state.P_E(1), LaunchHgt_;
+    takeoff.position.x = Start(0);
+    takeoff.position.y = Start(1);
 
     // take off
     while (ros::ok())

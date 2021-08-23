@@ -1,5 +1,5 @@
 /*
-Description: Run 
+Description: A Backsteppint Controller 
 Author: XIE Yuhan
 Email: yuhanxie@connect.hku.hk
 Updated: 28th. Jul. 2021
@@ -77,11 +77,13 @@ void BackStepping::YawController_(Vector3d Pr, Vector3d Vr, Vector3d Ar)
 
     if (abs(yaw_error) > 0.1 && abs(yaw_error - yaw_errorlast) < 0.01)
     {
+        // printf ("yaw r: %.4f, yaw r 2: %.4f\n", yawr, yawr_vtang);
         correct_yaw++;
-        if (correct_yaw >= 4)
+        if (correct_yaw >= 7)
         {
             yawr = twoPI(yawr + yaw_error);
             correct_yaw = 0;
+            // printf("---correcting---\n%.4f\n",correct_yaw);
         }
     }
     else

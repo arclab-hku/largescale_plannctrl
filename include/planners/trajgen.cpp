@@ -31,14 +31,16 @@ TrajectoryGenerator::TrajectoryGenerator(
     starting = 1;
     ending = 0;
 
-    LaunchHht = waypoints_(2, 0);
+    LaunchHht = waypoints_(2, 0);       // launch height
 }
 
 void TrajectoryGenerator::initial_generate(Vector3d START)
 {
     start_pt_ = START;
     // make trajectory for initial
+    starting = 1;
     makeNxtTraj_();
+    starting = 0;
 }
 
 Vector3d TrajectoryGenerator::getNewPoint_ (Vector3d start, Vector3d dirct, double length)
@@ -75,6 +77,7 @@ void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
     q_crnWayps.pop();
     int count = 1;
 
+    // printf("waypoints for generation\n");
     while (!q_crnWayps.empty()) 
     {
         Vector3d wpi = q_crnWayps.front();
@@ -82,7 +85,9 @@ void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
         // make sure two waypoints not be too close.
         if ((wpi - wayps.col(count-1)).norm()> 0.5)
         {
+            // printf("count%d\n",count);
             wayps.col(count) = wpi;
+            // cout <<wpi<<endl<<endl;
             count++;
         }
 
@@ -109,6 +114,9 @@ void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
         fAcc = MaxAcc_ * end_dirct;
     }
 
+    // printf("initial&final vel&acc\n");
+    // cout<<iVel<<endl<<iAcc<<endl<<fVel<<endl<<fAcc<<endl;
+
     // generate
     time_traj_ = cornerTraj_.generate(
         wayps, count,          // number of waypoints
@@ -132,7 +140,7 @@ void TrajectoryGenerator::makeNxtTraj_()
     while (distc == 0)
     {
         start_pt_ = waypoints_.col(index_wayp_);
-        printf("\nwaypoint %d pass\n", index_wayp_);
+        printf("\nwaypoint %d path generated\n", index_wayp_);
         printf("(%.2f, %.2f, %.2f)\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
         index_wayp_++;
         segment_(start_pt_, waypoints_.col(index_wayp_), distc, dirct);     // go through
@@ -168,12 +176,9 @@ void TrajectoryGenerator::makeNxtTraj_()
             {   // first waypoint couple distance is long
                 q_crnWayps.push(getNewPoint_(start_pt_, dirct, CnrMaxSeg));
                 cornerGen_(start_dirct, dirct);
-                starting = 0;       // cancel starting state
                 return;
             }
             // else continue corner
-
-            starting = 0;       // cancel starting state
         }
 
         bool making_corner = 1;
@@ -192,7 +197,7 @@ void TrajectoryGenerator::makeNxtTraj_()
                 q_crnWayps.push(waypoints_.col(index_wayp_));
                 ending = 1;
                 printf("\nlast waypoint %d ", index_wayp_+1);
-                printf("(%.2f, %.2f, %.2f) pass\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
+                printf("(%.2f, %.2f, %.2f) path generated\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
                 index_wayp_ = waypRead_.N;
                 cornerGen_(start_dirct, dirct);
                 return ;
@@ -210,7 +215,7 @@ void TrajectoryGenerator::makeNxtTraj_()
 
             // waypoint[i_wp] is passed now.
             printf("waypoint %d ", index_wayp_+1);
-            printf("(%.2f, %.2f, %.2f) pass\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
+            printf("(%.2f, %.2f, %.2f) path generated\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
             index_wayp_++;
 
             // stop making a corner

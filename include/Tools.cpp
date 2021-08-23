@@ -1,5 +1,5 @@
 /*
-Description: Run 
+Description: Basic tool functions for ctrl n plan
 Author: XIE Yuhan
 Email: yuhanxie@connect.hku.hk
 Updated: 28th. Jul. 2021
