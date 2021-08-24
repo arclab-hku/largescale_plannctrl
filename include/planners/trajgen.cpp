@@ -47,6 +47,7 @@ Vector3d TrajectoryGenerator::getNewPoint_ (Vector3d start, Vector3d dirct, doub
 {
     Vector3d result;
     result = start + length * dirct;
+    result(2, 0) = start(2, 0);
     return result;
 }
 
@@ -174,6 +175,7 @@ void TrajectoryGenerator::makeNxtTraj_()
 
             if (distc > CnrMaxSeg*2)
             {   // first waypoint couple distance is long
+                // generate a corner and next straight
                 q_crnWayps.push(getNewPoint_(start_pt_, dirct, CnrMaxSeg));
                 cornerGen_(start_dirct, dirct);
                 return;
