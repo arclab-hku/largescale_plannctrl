@@ -33,7 +33,6 @@ class BackStepping
         // tool functions
         Vector3d coor_(Vector3d p);
         // controllers
-        void LinearController_(Vector3d P, Vector3d V, Vector3d desire_P, Vector3d desire_Pd, Vector3d desire_Pdd);
         void YawController_(Vector3d Pr, Vector3d Vr, Vector3d Ar);
 
     public:

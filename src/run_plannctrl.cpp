@@ -66,6 +66,7 @@ int main(int argc, char **argv)
     printf("Vehicle Launched.\n");
 
     int i = 0;
+    Vector3d p_d, v_d, a_d;
     // for (int i = 0; i <= FlyStep; i++)
     while (!reference.trajFinished && ros::ok())
     {
@@ -73,7 +74,6 @@ int main(int argc, char **argv)
         // printf ("time %.2f\n", timee);
 
         //refer
-        Vector3d p_d, v_d, a_d;
         reference.get_desire(timee, p_d, v_d, a_d);
 
         // calculate control inputs
@@ -81,9 +81,12 @@ int main(int argc, char **argv)
 
         // step forward
         state = flying.step(bsc.yawCtrl, p_d, "yaw_n_position"); 
-        // state = flying.step(bsc.yawCtrl, bsc.velCtrl, "yaw_n_velocity"); 
 
         i++;
+    }
+    for(i = 0; i <= 100; i++)
+    {
+        state = flying.step(bsc.yawCtrl, p_d, "yaw_n_position"); 
     }
     printf("\nMission Finished.\n");
 

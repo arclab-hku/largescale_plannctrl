@@ -35,7 +35,7 @@ Vector3d BackStepping::coor_(Vector3d p)
 void BackStepping::YawController_(Vector3d Pr, Vector3d Vr, Vector3d Ar)
 {
     // dot of yaw
-    if (Vr(0) == 0 && Vr(1) == 0)
+    if (abs(Vr(0)) < 0.1 && abs(Vr(1)) < 0.1)
         yawr_dot = 0;
     else
         yawr_dot = (Vr(0) * Ar(1) - Ar(0) * Vr(1)) / (Vr(0) * Vr(0) + Vr(1) * Vr(1));
@@ -95,24 +95,10 @@ void BackStepping::YawController_(Vector3d Pr, Vector3d Vr, Vector3d Ar)
     yawCtrl = yawr;
 }
 
-void BackStepping::LinearController_(Vector3d P, Vector3d V, Vector3d desire_P, Vector3d desire_Pd, Vector3d desire_Pdd)
-{
-    // integral position error
-    Vector3d Pe0 = desire_P - P;
-    Int_Pe_ = Int_Pe_ + h_ * Pe0;
-
-    // position control
-    Vector3d Pe = desire_P - P + K1_ * Int_Pe_;          // position error
-    Vc = desire_Pd + A1_ * Pe + K1_ * (desire_P - P);       // virtual control input (velocity)
-}
-
 void BackStepping::controller(States state, Vector3d desire_P, Vector3d desire_Pd, Vector3d desire_Pdd)
 {
     Vector3d P = coor_(state.P_E);
     Vector3d V = coor_(state.V_E);
 
-    LinearController_(P, V, coor_(desire_P), coor_(desire_Pd), coor_(desire_Pdd));
     YawController_(desire_P, desire_Pd, desire_Pdd);
-
-    velCtrl = coor_(Vc);
 }

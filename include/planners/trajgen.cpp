@@ -19,6 +19,7 @@ TrajectoryGenerator::TrajectoryGenerator(
     MaxVel_ = MAXVEL;
     MaxAcc_ = MAXACC;
     MaxCnrVel_ = MAXCORVEL;
+    // StartEndSeg = 2/3 * MaxCnrVel_ * MaxCnrVel_ * MaxAcc_;
 
     // read waypoints from txt
     waypoints_ = waypRead_.read();
@@ -47,7 +48,7 @@ Vector3d TrajectoryGenerator::getNewPoint_ (Vector3d start, Vector3d dirct, doub
 {
     Vector3d result;
     result = start + length * dirct;
-    result(2, 0) = start(2, 0);
+    // result(2, 0) = start(2, 0);
     return result;
 }
 
@@ -62,7 +63,7 @@ void TrajectoryGenerator::segment_(Vector3d start, Vector3d end, double &distc, 
 void TrajectoryGenerator::straightGen_()
 {
     currentTraj_ = 1;
-    time_traj_ = strghtTraj_.generate(start_pt_, end_pt_);
+    time_traj_ = strghtTraj_.generate(start_pt_, end_pt_, starting, ending);
 }
 
 // generate a corner polynomial trajectory by PolyTrajGenerator
@@ -75,6 +76,8 @@ void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
     MatrixXd wayps(3, q_crnWayps.size());
 
     wayps.col(0) = q_crnWayps.front();
+    // printf("count0\n");
+    // cout <<wayps.col(0)<<endl<<endl;
     q_crnWayps.pop();
     int count = 1;
 
@@ -133,6 +136,7 @@ void TrajectoryGenerator::cornerGen_(Vector3d start_dirct, Vector3d end_dirct)
 */
 void TrajectoryGenerator::makeNxtTraj_()
 {
+    // printf("\n=====making new=====\n");
     // get distance&direction from start point to waypoints_[i_wp]
     Vector3d dirct;
     double distc;
@@ -141,7 +145,7 @@ void TrajectoryGenerator::makeNxtTraj_()
     while (distc == 0)
     {
         start_pt_ = waypoints_.col(index_wayp_);
-        printf("\nwaypoint %d path generated\n", index_wayp_);
+        printf("==>waypoint %d path generated\n", index_wayp_);
         printf("(%.2f, %.2f, %.2f)\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
         index_wayp_++;
         segment_(start_pt_, waypoints_.col(index_wayp_), distc, dirct);     // go through
@@ -149,8 +153,39 @@ void TrajectoryGenerator::makeNxtTraj_()
 
     if (distc > CnrMaxSeg+0.1 && !starting)
     {                                   //////////////////////// straight next
-        // do not update i_wp, cause waypoint[i_wp] has not passed.
-        end_pt_ =  waypoints_.col(index_wayp_) - CnrMaxSeg * dirct;
+        // end of traj
+        if (index_wayp_ == (waypRead_.N-1))
+        {
+            ending = 1;
+            end_pt_ =  waypoints_.col(index_wayp_);
+            printf("==>last waypoint %d ", index_wayp_+1);
+            printf("(%.2f, %.2f, %.2f) path generated\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
+            index_wayp_ = waypRead_.N;
+        }
+        else
+        {
+            // do not update i_wp, cause waypoint[i_wp] has not passed.
+            end_pt_ =  waypoints_.col(index_wayp_) - CnrMaxSeg * dirct;
+        }
+        straightGen_();
+        return ;
+    }
+    else if (distc > CnrMaxSeg*2 && starting)
+    {                                   //////////////////////// start with straight
+        // end of traj
+        if (index_wayp_ == (waypRead_.N-1))
+        {
+            ending = 1;
+            end_pt_ =  waypoints_.col(index_wayp_);
+            printf("==>last waypoint %d ", index_wayp_+1);
+            printf("(%.2f, %.2f, %.2f) path generated\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
+            index_wayp_ = waypRead_.N;
+        }
+        else
+        {
+            // do not update i_wp, cause waypoint[i_wp] has not passed.
+            end_pt_ =  waypoints_.col(index_wayp_) - CnrMaxSeg * dirct;
+        }
         straightGen_();
         return ;
     }
@@ -159,7 +194,7 @@ void TrajectoryGenerator::makeNxtTraj_()
         // corner segment for start
         double corner_seg = CnrSeg;
         if (distc < CnrSeg*3)       // distance from start to first wayp
-            corner_seg = CnrSeg/2;
+            corner_seg = distc/3;
 
         // directions for corner traj. gen.
         Vector3d start_dirct = dirct;
@@ -172,15 +207,6 @@ void TrajectoryGenerator::makeNxtTraj_()
         {
             // push starting point end
             q_crnWayps.push(getNewPoint_(start_pt_, dirct, corner_seg)); 
-
-            if (distc > CnrMaxSeg*2)
-            {   // first waypoint couple distance is long
-                // generate a corner and next straight
-                q_crnWayps.push(getNewPoint_(start_pt_, dirct, CnrMaxSeg));
-                cornerGen_(start_dirct, dirct);
-                return;
-            }
-            // else continue corner
         }
 
         bool making_corner = 1;
@@ -196,7 +222,7 @@ void TrajectoryGenerator::makeNxtTraj_()
             // end of traj
             if (index_wayp_ == (waypRead_.N-1))
             {   
-                q_crnWayps.push(waypoints_.col(index_wayp_));
+                q_crnWayps.push(waypoints_.col(index_wayp_));       // push the last point
                 ending = 1;
                 printf("\nlast waypoint %d ", index_wayp_+1);
                 printf("(%.2f, %.2f, %.2f) path generated\n", waypoints_(0,index_wayp_), waypoints_(1,index_wayp_), waypoints_(2,index_wayp_));
@@ -280,46 +306,101 @@ void TrajectoryGenerator::get_desire(double timee, Vector3d &p_d, Vector3d &v_d,
 */
 StraightTrajGenerator::StraightTrajGenerator(double MINVEL, double MAXVEL, double MAXACC)
 {
-    MinVel_ = MINVEL;
-    MaxVel_ = MAXVEL;
-    AccRate_ = MAXACC;
+    MinVel_ = MINVEL;       // 6
+    MaxVel_ = MAXVEL;       // 14
+    AccRate_ = MAXACC;      //4
     //
-    MaxAccTime_ = (MaxVel_ - MinVel_) / AccRate_;
+    MaxAccTime_ = (MaxVel_ - MinVel_) / AccRate_;       //2
     MaxAccDistc_ = MinVel_ * MaxAccTime_ +0.5 * AccRate_ * pow(MaxAccTime_, 2);
+    //
+    MaxStartTime_ = MaxVel_ / AccRate_;        // 3.5
+    MaxStartDistc_ = 0.5 *AccRate_*MaxStartTime_*MaxStartTime_;      //24.5
+    //
+    MinStartTime_ = MinVel_ / AccRate_;        // 1.5
+    MinStartDistc_ = 0.5 *AccRate_*MinStartTime_*MinStartTime_;      //4.5
 }
 
-double StraightTrajGenerator::generate(Vector3d start, Vector3d end)
+double StraightTrajGenerator::generate(
+            Vector3d start, 
+            Vector3d end,
+            int starting,
+            int ending)
 {
+    // printf("\nstraight===");
+    // printf("start (%.2f, %.2f, %.2f)  ", start(0), start(1), start(2));
+    // printf("end (%.2f, %.2f, %.2f)\n", end(0), end(1), end(2));
     start_pt_ = start;
     end_pt_ = end;
 
     double distc = (end - start).norm();        // distance
     dirct_ = (end - start)/distc;                           // direction
+    // cout<<distc<<" "<<dirct_<<endl;
 
-    // allocate time
-    if (distc > MaxAccDistc_ * 2)
+    if (starting)
     {
-        // accelerate
+        startVel_ = 0.0;
+        accDistc_ = MaxStartDistc_;
+        accTime_ = MaxStartTime_;
+    }
+    else 
+    {
+        startVel_ = MinVel_;
         accDistc_ = MaxAccDistc_;
         accTime_ = MaxAccTime_;
+    }
+    if (ending)
+    {
+        endVel_ = 0.0;
+        daccDistc_ = MaxStartDistc_;
+        daccTime_ = MaxStartTime_;
+    }
+    else 
+    {
+        endVel_ = MinVel_;
+        daccDistc_ = MaxAccDistc_;
+        daccTime_ = MaxAccTime_;
+    }
+
+    // allocate time
+    if (distc > accDistc_+ daccDistc_)
+    {
         // constant velocity
-        constDistc_ = distc - MaxAccDistc_*2;
+        constDistc_ = distc - accDistc_- daccDistc_;
         constTime_ = constDistc_/MaxVel_;
         velMax_ = MaxVel_;
     }
     else
     {
-        // accelerate
-        accDistc_ = distc / 2;
-        accTime_ = (-MinVel_ + sqrt(MinVel_*MinVel_+2*AccRate_*accDistc_)) / AccRate_;
-        velMax_ = MinVel_ + accTime_ * AccRate_;
         // constant velocity
         constDistc_ = 0.0;
         constTime_ = 0.0;
+        // re-calculate acc part
+        if (!starting&&!ending)     // divide equally
+        {
+            // accelerate
+            accDistc_ = distc / 2;
+            accTime_ = (-MinVel_ + sqrt(MinVel_*MinVel_+2*AccRate_*accDistc_)) / AccRate_;
+            velMax_ = MinVel_ + accTime_ * AccRate_;
+            daccDistc_ = accDistc_;
+            daccTime_ = accTime_;
+        }
+        else
+        {  
+            // max vel
+            double remain_dist = distc - MinStartDistc_*(starting+ending);
+            double remain_time = (-MinVel_ + sqrt(MinVel_*MinVel_+2*AccRate_*remain_dist)) / AccRate_;
+            velMax_ = MinVel_ + remain_time*AccRate_;
+            // re-allocate
+            accDistc_ = remain_dist/2 +MinStartDistc_*starting;
+            daccDistc_ = remain_dist/2 +MinStartDistc_*ending;
+            accTime_ = (velMax_-startVel_)/AccRate_;
+            daccTime_ = (velMax_-endVel_)/AccRate_;
+        }
     }
-
-    return accTime_+accTime_ + constTime_;
-
+    // cout << accTime_ << " " << constTime_ << " " << daccTime_ << endl;
+    // cout << accDistc_ << " " << constDistc_ << " " << daccDistc_ << endl;
+    // cout<<startVel_<<" "<<velMax_<<" "<<endVel_<<endl;
+    return accTime_ + daccTime_ + constTime_;
 }
 
 void StraightTrajGenerator::get_desire(double timee, Vector3d &p_d, Vector3d &v_d, Vector3d &a_d)
@@ -328,8 +409,8 @@ void StraightTrajGenerator::get_desire(double timee, Vector3d &p_d, Vector3d &v_
     {
         // accel
         a_d = AccRate_ * dirct_;
-        v_d = (MinVel_ + AccRate_*timee) * dirct_;
-        p_d = start_pt_ + (MinVel_*timee + 0.5*AccRate_*pow(timee,2)) * dirct_;
+        v_d = (startVel_ + AccRate_*timee) * dirct_;
+        p_d = start_pt_ + (startVel_*timee + 0.5*AccRate_*pow(timee,2)) * dirct_;
         return;
     }
     timee -=accTime_;
@@ -342,7 +423,7 @@ void StraightTrajGenerator::get_desire(double timee, Vector3d &p_d, Vector3d &v_
         return;
     }
     timee -=constTime_;
-    if (timee < accTime_)
+    if (timee < daccTime_)
     {
         // de-accel;
         a_d = -AccRate_ * dirct_;
@@ -350,9 +431,10 @@ void StraightTrajGenerator::get_desire(double timee, Vector3d &p_d, Vector3d &v_
         p_d = start_pt_ + (accDistc_ + constDistc_ + velMax_*timee - 0.5*AccRate_*pow(timee,2)) * dirct_;
         return;
     }
+    // printf("more%.2f\n",timee);
     p_d = end_pt_;
-    v_d = MinVel_ * dirct_;
-    a_d = AccRate_ * dirct_;
+    v_d = endVel_ * dirct_;
+    a_d << 0.0, 0.0, 0.0;
     return;
 }
 
@@ -465,3 +547,23 @@ void PolyTrajGenerator::get_desire(double timee, Vector3d &p_d, Vector3d &v_d, V
     v_d = minJerkTraj.getVel(timee);
     a_d = minJerkTraj.getAcc(timee);
 }
+
+// /*
+// // Generate Straight Trajectory with uniform jerk
+// */
+// UniJerkTrajGenerator::UniJerkTrajGenerator(double MAXVEL, double MAXACC)
+// {
+//     MaxVel = MAXVEL;
+//     MaxAcc = MAXACC;
+// }
+
+// class UniJerkTrajGenerator
+// {
+//     private:
+//         double MaxVel, MaxAcc;
+//         double TtlLen, TtlTime;
+    
+//     public:
+//         UniJerkTrajGenerator(double MAXVEL, double MAXACC);
+//         void get_desire(double timee, Vector3d &p_d, Vector3d &v_d, Vector3d &a_d);
+// }

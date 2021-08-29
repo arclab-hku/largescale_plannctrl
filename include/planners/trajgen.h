@@ -30,9 +30,14 @@ class StraightTrajGenerator
         double MaxVel_, MinVel_, AccRate_;
         double MaxAccTime_, MaxAccDistc_;
 
+        // for start&end
+        double MaxStartTime_, MaxStartDistc_;
+        double MinStartTime_, MinStartDistc_;
+
         // for certain traj, to generate
-        double accDistc_, constDistc_;
-        double accTime_, constTime_;
+        double startVel_, endVel_;
+        double accDistc_, constDistc_, daccDistc_;
+        double accTime_, constTime_, daccTime_;
         double velMax_;
         Vector3d dirct_, start_pt_, end_pt_;
 
@@ -45,7 +50,9 @@ class StraightTrajGenerator
 
         double generate(
             Vector3d start, 
-            Vector3d end);      // return total time
+            Vector3d end,
+            int starting,
+            int ending);      // return total time
         void get_desire(double timee, Vector3d &p_d, Vector3d &v_d, Vector3d &a_d);
 };
 
@@ -81,6 +88,20 @@ class PolyTrajGenerator
         void get_desire(double timee, Vector3d &p_d, Vector3d &v_d, Vector3d &a_d);
 };
 
+// /*
+// // Generate Straight Trajectory with uniform jerk
+// */
+// class UniJerkTrajGenerator
+// {
+//     private:
+//         double MaxVel, MaxAcc;
+//         double TtlLen, TtlTime;
+    
+//     public:
+//         UniJerkTrajGenerator(double MAXVEL, double MAXACC);
+//         void get_desire(double timee, Vector3d &p_d, Vector3d &v_d, Vector3d &a_d);
+// }
+
 /*
 // Generate Trajectory by waypoints.txt
 // return desire p, v, a, by time
@@ -106,9 +127,10 @@ class TrajectoryGenerator
         // params for corner
         double CnrMaxSeg = 21.0;     // preserve segment for corner
         double CnrSeg = 7.0;            // corner waypoint segment
+        // double StartEndSeg;
         // double CnrMaxVel = 4.0;     // initial & final vel 
 
-        bool starting, ending;  // start & end wayp of whole traj has zero vel&ac
+        int starting, ending;  // start & end wayp of whole traj has zero vel&ac
 
         WayPointsReader waypRead_;        // read waypoints from txt
         PolyTrajGenerator cornerTraj_;
@@ -122,6 +144,7 @@ class TrajectoryGenerator
 
         void straightGen_();
         void cornerGen_(Vector3d start_dirct, Vector3d end_dirct);
+        // void StartEndGen_();
         
         // generate a trajectory from start point go by waypoints_[i_wp].
         void makeNxtTraj_();
